@@ -1,22 +1,26 @@
-function result = globalRealization(Phi, A, B, C, D)
+function result = globalRealization(Phi)
 %Given a matrix of L which contains multiple realizations of state space
 %models, produce a global realization of L.
-    r = 1;
+    c = 1;
+    A = zeros(2,2);
+    B = zeros(2,1);
+    C = zeros(1,2);
+    D = zeros(1,1);
     
-    for c = 1:size(Phi, 2)
-        tempA = ss(Phi(:,c)).A;
-        tempB = ss(Phi(:,c)).B;
-        tempC = ss(Phi(:,c)).C;
-        if r == 1
+    for r = 1:size(Phi, 1)
+        tempA = ss(Phi(r,:)).A;
+        tempB = ss(Phi(r,:)).B;
+        tempC = ss(Phi(r,:)).C;
+        if c == 1
             A = tempA;
             B = tempB;
             C = tempC;
-            r = r + 1;
-        elseif (r <= size(Phi, 1) && r > 1)
+            c = c + 1;
+        elseif (c <= size(Phi, 2) && c > 1)
             A = blkdiag(A, tempA);
-            B = blkdiag(B, tempB);
-            C = cat(2, C, tempC);
-            r = r + 1;
+            B = cat(1, B, tempB);
+            C = blkdiag(C, tempC);
+            c = c + 1;
         end
     end
     result = ss(A,B,C,D);
