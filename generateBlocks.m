@@ -1,4 +1,4 @@
-function [T_matrix] = generateBlocks(idx_set_L, idx_set_R)
+function [T_matrix] = generateBlocks(idx_set_L, idx_set_R, tMatrix)
 %generates blocks based on the sizes in the indexed sets L and R
 
     old_idx_set = [idx_set_R;idx_set_L]; %index set of the original K realization
@@ -22,7 +22,7 @@ function [T_matrix] = generateBlocks(idx_set_L, idx_set_R)
     for i = 1:length(new_idx_set) %rows
         T_block_row = [];
         for j = 1:length(old_idx_set) %cols
-            if I_locs(i,j)
+            if tMatrix(i,j)
                 T_block_row = [T_block_row, eye(reshape(block_sizes(i,j,:),[1,2]))]; %append I block
             else
                 T_block_row = [T_block_row, zeros(reshape(block_sizes(i,j,:),[1,2]))]; %append 0 block

@@ -1,45 +1,26 @@
-function [AK, BK, CK, DK] = generateRealization(p, idx_set_L, idx_set_R, adjacency)
-% generate the realization of LR^{-1}
-    tot_state_L = sum(idx_set_L); tot_state_R = sum(idx_set_R);
+function [K] = generateRealization(p, Phiu, Phix, Iu, Ix, T)
+% generate the realization of LR^{-1} = K
+    tot_state_Phiu = sum(Iu); tot_state_Phix = sum(Ix);
 
-    A_L = zeros(tot_state_L); A_R = zeros(tot_state_R);
-    B_L = zeros(tot_state_L,3); B_R = zeros(tot_state_R,3);
-    C_L = zeros(3,tot_state_L); C_R = zeros(3,tot_state_R);
-    D_L = zeros(3); D_R = zeros(3);
+    A_Phiu = Phiu.A; A_Phix = Phix.A;
+    B_Phiu = Phiu.B; B_Phix = Phix.B;
+    C_Phiu = Phiu.C; C_Phix = Phix.C;
+    D_L = Phiu.D; D_R = Phix.D;
     
-    idx_inc_L = [0;cumsum(idx_set_L)]; idx_inc_R = [0;cumsum(idx_set_R)]; %just makes keeping track of where to
-                                                                        %place the blocks easier
+    AK11 = A_Phix - B_Phix*C_Phix*(A_Phix+p*eye(tot_state_Phix)); 
+    AK12 = zeros(tot_state_Phix,tot_state_Phiu);
+    AK21 = -B_Phiu*C_Phix*(A_Phix+p*eye(tot_state_Phix)); AK22 = A_Phiu;
     
-    for i = 1:3 %rows
-        for j = 1:3 %columns
-            if adjacency(i,j)
-                rows_L = idx_inc_L(i)+1:idx_inc_L(i+1); rows_R = idx_inc_R(i)+1:idx_inc_R(i+1);
-                cols_L = idx_inc_L(j)+1:idx_inc_L(j+1); cols_R = idx_inc_R(j)+1:idx_inc_R(j+1);
-    
-                A_block_L = rand(idx_set_L(i),idx_set_L(j)); A_block_R = rand(idx_set_R(i),idx_set_R(j));
-                A_L(rows_L,cols_L) = A_block_L; A_R(rows_R,cols_R) = A_block_R;
-    
-                C_block_L = rand(1,idx_set_L(j)); C_block_R = rand(1,idx_set_R(j));
-                C_L(i,cols_L) = C_block_L; C_R(i,cols_R) = C_block_R;
-                if i == j
-                    B_block_L = rand(idx_set_L(i),1); B_block_R = rand(idx_set_R(i),1);
-                    B_L(rows_L,i) = B_block_L; B_R(rows_R,i) = B_block_R;
-                end
-            end
-        end
-    end
-
-    AK11 = A_R - B_R*C_R*(A_R+p*eye(tot_state_R)); 
-    AK12 = zeros(tot_state_R,tot_state_L);
-    AK21 = -B_L*C_R*(A_R+p*eye(tot_state_R)); AK22 = A_L;
-    
-    BK1 = B_R; BK2 = B_L;
-    CK1 = -C_L*B_L*C_R*(A_R + p*eye(tot_state_R)); 
-    CK2 = C_L*(A_L + p*eye(tot_state_L));
-    DK = C_L * B_L;
+    BK1 = B_Phix; BK2 = B_Phiu;
+    CK1 = -C_Phiu*B_Phiu*C_Phix*(A_Phix + p*eye(tot_state_Phix)); 
+    CK2 = C_Phiu*(A_Phiu + p*eye(tot_state_Phiu));
+    DK = C_Phiu * B_Phiu;
     
     AK = [AK11, AK12;
         AK21, AK22];
     BK = [BK1; BK2];
     CK = [CK1, CK2];
+    AK_til = T*AK/T; BK_til = T*BK; CK_til = CK/T;
+
+    K = ss(AK_til, BK_til, CK_til, DK);
 end
