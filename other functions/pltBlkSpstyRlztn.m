@@ -1,6 +1,6 @@
 function pltBlkSpstyRlztn(G,Ix,Iu,Iy)
 %pltBlkSpstyRlztn Plot block sparsity structure of state space model
-%   Plot plot sparsity structure of LTI system G with state partitioned by
+%   Plot sparsity structure of LTI system G with state partitioned by
 %   Ix, input partitioned by Iu and output partitions by Iy.
 figure()
 subplot(2,2,1)
