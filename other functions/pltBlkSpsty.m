@@ -1,7 +1,7 @@
 function pltBlkSpsty(M,blk_row_szs,blk_col_szs)
 %pltBlkSpsty Plot the block sparsity structure of matrix M.
 %   Uses Matlab native spy() with the addition of lines to show desired
-%   block sizes.
+%   block sizes, prescribed by blk_row_szs and blk_col_sizes
 
     row_cumsum = cumsum(blk_row_szs); col_cumsum = cumsum(blk_col_szs);
     
