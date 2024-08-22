@@ -1,7 +1,7 @@
 function Phi_struc = structuredRlztn(Phi)
 %structuredRlztn Create structured realization of structured transfer
 %matrix $\Phi$.
-%   Creates a realization of $\Phi$ with block diagonal $A$ and $C$ and $B$
+%   Creates a realization of $\Phi$ with  $A$ and $C$ block diagonal and $B$
 %   with the same structure as the transfer matrix.
     
     Phi = minreal(Phi);
