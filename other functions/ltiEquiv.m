@@ -1,6 +1,8 @@
-function sys_equiv = LTI_equiv(G1,G2)
-    %tests whether LTI systems G1 and G2 are equivalent within numerical
-    %precision. G1, G2 can be any ltisys object, e.g. ss, tf, zpk
+function sys_equiv = ltiEquiv(G1,G2)
+%ltiEquiv Test whether LTI systems G1 and G2 have the same input/output
+%behavior
+%   Simulates the responses of G1 and G2 to an input to test if they are
+%   the same (to within numerical precision).
 
     sys_equiv = true;
     

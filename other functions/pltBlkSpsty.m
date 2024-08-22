@@ -1,6 +1,7 @@
-function spsty_idx_set(M,blk_row_szs,blk_col_szs)
-    %plots the sparsity pattern of M and shows the block partitions of the
-    %proposed index set with sizes of each block row and each block column
+function pltBlkSpsty(M,blk_row_szs,blk_col_szs)
+%pltBlkSpsty Plot the block sparsity structure of matrix M.
+%   Uses Matlab native spy() with the addition of lines to show desired
+%   block sizes.
 
     row_cumsum = cumsum(blk_row_szs); col_cumsum = cumsum(blk_col_szs);
     
@@ -20,7 +21,6 @@ function spsty_idx_set(M,blk_row_szs,blk_col_szs)
         error('column index set does not match with dimensions of M')
     end
 
-    figure()
     hold on
     spy(M)
     for i = 1:length(row_cumsum)-1
