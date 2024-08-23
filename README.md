@@ -18,7 +18,7 @@ The `/other functions/` folder contains several auxiliary functions used for con
 - `/demos/`
     - `usage_demo.mlx`
     - `ring_graph_example.mlx`
-    - `dam_example.mlx'`
+    - `dam_example.mlx`
 - `/intermediate functions/`
     - `structuredRlztn.m`
     - `idxSet.m`
