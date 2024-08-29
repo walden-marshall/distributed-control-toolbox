@@ -1,6 +1,6 @@
-# Structured Realizations of SLS Controllers
+# Structured Realizations of Controllers Based on Factorizations
 
-Our objective is to create distributed state-space realizations of SLS state feedback controllers.
+Our objective is to create distributed state-space realizations of factored controller transfer matrices. We illustrate these results with the SLS factorization.
 
 An infinite number of state-space models can be used to capture the input-output behavior of a given linear-time-invariant (LTI) system. When the LTI system of interest is a controller which we hope to implement on hardware as a number of subcontroller units, it is necessary to find a realization that can be implemented on a network with some desired communication structure. This code base moves from structured System-Level-Synthesis (SLS) transfer function matrices $\Phi^u$ and $\Phi^x$ to a controller realization with the same structure.
 
@@ -30,3 +30,4 @@ The `/other functions/` folder contains several auxiliary functions used for con
     - `pltBlkSpstyRlztn.m`
     - `ltiEquiv.m`
     - `sym2tf.m`
+
