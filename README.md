@@ -8,7 +8,7 @@ The `structuredControllerRealization.m` function performs the desired task of ge
 
 The underlying algorithm for `structuredControllerRealization.m` consists of several intermediate steps, contained in `/intermediate functions/`. The script `/demos/ring_graph_demo.mlx` explains these steps for the "Consensus of First Order Subsystems" problem of [Jensen and Bamieh, 2022](https://arxiv.org/pdf/2012.04792).
 
-The script `/demos/dam_example.mlx` generates the optimal SLS state feedback controller for a system of three river dams presented in [Rantzer, 2019](https://arxiv.org/pdf/1812.07748).
+The script `/demos/model_match_demo.mlx` illustrates how to perform a model match to an unconcstrained optimization problem for controller synthesis, using the system of three river dams presented in [Rantzer, 2019](https://arxiv.org/pdf/1812.07748) as an example.
 
 The `/other functions/` folder contains several auxiliary functions used for concise presentation in the demos.
 
@@ -18,7 +18,7 @@ The `/other functions/` folder contains several auxiliary functions used for con
 - `/demos/`
     - `usage_demo.mlx`
     - `ring_graph_example.mlx`
-    - `dam_example.mlx`
+    - `model_match_demo.mlx`
 - `/intermediate functions/`
     - `structuredRlztn.m`
     - `idxSet.m`
