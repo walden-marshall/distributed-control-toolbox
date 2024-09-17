@@ -19,6 +19,13 @@ function sys_equiv = ltiEquiv(G1,G2)
         sys_equiv = false;
         disp('systems not equivalent: systems have different number of inputs')
     end
+
+    ct1 = isct(G1); ct2 = isct(G2);
+
+    if ct1 ~= ct2
+        sys_equiv = false;
+        disp('cannot compare continuous and discrete time systems')
+    end
     
     if not(sys_equiv)
         return
@@ -30,18 +37,20 @@ function sys_equiv = ltiEquiv(G1,G2)
     p1 = pole(G1); p2 = pole(G2);
     p_max = max( [abs(p1);abs(p2)] );
     p_min = min( [abs(p1);abs(p2)] );
-    if p_min ~= 0 
-        dec_p = ceil( log10(p_max/p_min) );
-    else
-        dec_p = ceil( log10(p_max) );
-    end
+    p_min_thr = 1e-3;
+    p_min = max(p_min, p_min_thr);
+    dec_p = ceil( log10(p_max/p_min) );
     
     omega = logspace( log10(p_min)-1, log10(p_max)+1, 3*dec_p+3);
     
     res = 0.1/p_max; dur = 10/p_min;
     N = ceil(dur/res);
     
-    t = linspace(0,dur,N);
+    if ct1
+        t = linspace(0,dur,N);
+    else
+        t = (0:N-1)*G1.Ts;
+    end
     
     u = zeros(size(G1,2),N);
     for i = 1:length(omega)
