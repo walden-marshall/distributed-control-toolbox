@@ -33,7 +33,7 @@ function sys_equiv = ltiEquiv(G1,G2)
     if p_min ~= 0 
         dec_p = ceil( log10(p_max/p_min) );
     else
-        dec_p = ceil( log10(pmax) );
+        dec_p = ceil( log10(p_max) );
     end
     
     omega = logspace( log10(p_min)-1, log10(p_max)+1, 3*dec_p+3);
